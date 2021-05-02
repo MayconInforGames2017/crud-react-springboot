@@ -2,10 +2,32 @@ package com.example.backend.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name = "usuario_grupo")
 public class Grupo {
 
+	@Id
+	@GeneratedValue
 	private Long id;
 
+	@NonNull
 	private String nome;
 	private String endereco;
 	private String cidade;
@@ -13,8 +35,10 @@ public class Grupo {
 	private String pais;
 	private String cep;
 
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Usuario usuario;
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Evento> eventos;
 
 	public Long getId() {
